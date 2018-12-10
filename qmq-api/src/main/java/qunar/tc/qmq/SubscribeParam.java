@@ -20,14 +20,21 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
+ * 消费者（订阅者）订阅参数。定义此类而不是采用Map<String,Object>类型的原因是，参数固定，更容易理解。
+ * 
  * @author yiqun.fan create on 17-11-2.
  */
 public class SubscribeParam {
-    public static final SubscribeParam DEFAULT = new SubscribeParam(false, false, TagType.NO_TAG, Collections.<String>emptySet());
+    public static final SubscribeParam DEFAULT = new SubscribeParam(false, false, TagType.NO_TAG,
+            Collections.<String>emptySet());
 
+    /** 是否最多可以消费一次（1次或0次），是：针对不太重要的消息 */
     private final boolean consumeMostOnce;
+    /** 标签之间的关系（或、并） */
     private final TagType tagType;
+    /** 是否广播 */
     private boolean isBroadcast;
+    /** 添加的标签 */
     private final Set<String> tags;
 
     private SubscribeParam(boolean consumeMostOnce, boolean isBroadcast, TagType tagType, Set<String> tags) {

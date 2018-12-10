@@ -22,6 +22,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 统一消息接口
+ * 
  * @author miao.yang susing@gmail.com
  * @date 2012-12-26
  */
@@ -78,8 +80,10 @@ public interface Message {
      * 可以设置4MB的超大字符串，但是要注意，使用这个方法设置的字符串必须使用getLargeString方法获取
      * 另外，超大消息不提供持久化支持，不能使用事务或持久消息
      *
-     * @param name  key
-     * @param value value
+     * @param name
+     *            key
+     * @param value
+     *            value
      */
     void setLargeString(String name, String value);
 
@@ -100,7 +104,8 @@ public interface Message {
     /**
      * 获取setLargeString方法设置的字符串
      *
-     * @param name key
+     * @param name
+     *            key
      * @return value
      */
     String getLargeString(String name);
@@ -108,7 +113,8 @@ public interface Message {
     /**
      * 这个方法不是线程安全
      *
-     * @param tag 不能是null或empty, 长度不能超过Short.MAX_VALUE，tag的个数最多不能超过10个
+     * @param tag
+     *            不能是null或empty, 长度不能超过Short.MAX_VALUE，tag的个数最多不能超过10个
      * @return this
      */
     Message addTag(String tag);
@@ -138,23 +144,23 @@ public interface Message {
     /**
      * 显式手动ack的时候，使用该方法
      *
-     * @param elapsed 消息处理时长
-     * @param e       如果消息处理失败请传入异常，否则传null
-     *                <p/>
-     *                在producer端调用会抛出UnsupportedOperationException异常
+     * @param elapsed
+     *            消息处理时长
+     * @param e
+     *            如果消息处理失败请传入异常，否则传null
+     *            <p/>
+     *            在producer端调用会抛出UnsupportedOperationException异常
      */
     void ack(long elapsed, Throwable e);
 
     void ack(long elapsed, Throwable e, Map<String, String> attachment);
-
 
     void setDelayTime(Date date);
 
     void setDelayTime(long delayTime, TimeUnit timeUnit);
 
     /**
-     * 第几次发送
-     * 使用方应该监控该次数，如果不是刻意设计该次数不应该太多
+     * 第几次发送 使用方应该监控该次数，如果不是刻意设计该次数不应该太多
      *
      * @return
      */

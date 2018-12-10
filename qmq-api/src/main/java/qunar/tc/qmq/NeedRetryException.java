@@ -20,12 +20,12 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by zhaohui.yu
- * 15/12/2
+ * Created by zhaohui.yu 15/12/2
  * <p/>
  * qmq会根据该异常里的时间进行重试间隔控制
  */
 public class NeedRetryException extends RuntimeException {
+    private static final long serialVersionUID = 8804841078320424212L;
     private final long next;
 
     public NeedRetryException(Date next, String message) {
@@ -39,8 +39,7 @@ public class NeedRetryException extends RuntimeException {
     }
 
     /**
-     * WARNING WARNING
-     * 使用该构造函数构造的异常会立即重试
+     * WARNING WARNING 使用该构造函数构造的异常会立即重试
      *
      * @param message
      */

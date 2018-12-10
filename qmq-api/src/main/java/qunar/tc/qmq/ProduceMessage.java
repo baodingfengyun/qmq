@@ -17,26 +17,36 @@
 package qunar.tc.qmq;
 
 /**
- * Created by zhaohui.yu
- * 10/31/16
+ * 消息生产接口
+ * 
+ * Created by zhaohui.yu 10/31/16
  */
 public interface ProduceMessage {
 
+    /** 获取消息ID */
     String getMessageId();
 
+    /** 获取分类 */
     String getSubject();
 
+    /** 发送 */
     void send();
 
+    /** 异常 */
     void error(Exception e);
 
+    /** 失败 */
     void failed();
 
+    /** 阻塞 */
     void block();
 
+    /** 完成 */
     void finish();
 
+    /** 获取消息 */
     Message getBase();
 
+    /** 开始发送追踪 */
     void startSendTrace();
 }

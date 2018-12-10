@@ -17,9 +17,9 @@
 package qunar.tc.qmq;
 
 /**
- * User: zhaohuiyu
- * Date: 5/24/13
- * Time: 3:31 PM
+ * 消息发送状态监听器
+ * 
+ * User: zhaohuiyu【余昭辉】 Date: 5/24/13 Time: 3:31 PM
  * <p/>
  * 消息的发送状态监听器
  */

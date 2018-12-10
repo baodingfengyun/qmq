@@ -16,11 +16,13 @@
 package qunar.tc.qmq;
 
 /**
+ * 注册后的监听接口
+ * 
  * @author miao.yang susing@gmail.com
  * @date 2012-12-26
  */
 public interface ListenerHolder {
-    void stopListen();
+	void stopListen();
 
-    void resumeListen();
+	void resumeListen();
 }

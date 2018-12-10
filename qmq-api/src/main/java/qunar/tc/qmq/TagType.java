@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 一个Topic的消息又分为不同的类别，而不同的消费者可能对不同的类别感兴趣。通过tag在服务端进行过滤。 定义不同TAG之间的逻辑关系：无效、或、并
+ * 
  * @author yunfeng.yang
  * @since 2018/1/18
  */

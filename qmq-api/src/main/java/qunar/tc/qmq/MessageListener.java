@@ -16,6 +16,8 @@
 package qunar.tc.qmq;
 
 /**
+ * 消息处理监听接口，最主要的实现接口
+ * 
  * @author miao.yang susing@gmail.com
  * @date 2012-12-26
  */
