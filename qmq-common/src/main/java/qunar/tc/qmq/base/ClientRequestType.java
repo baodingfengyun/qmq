@@ -20,7 +20,7 @@ package qunar.tc.qmq.base;
  * @author yunfeng.yang
  * @since 2017/10/16
  */
-public enum  ClientRequestType {
+public enum ClientRequestType {
     ONLINE(1), HEARTBEAT(2);
 
     private int code;
@@ -33,4 +33,3 @@ public enum  ClientRequestType {
         return code;
     }
 }
-

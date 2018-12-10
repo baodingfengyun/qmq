@@ -17,6 +17,8 @@
 package qunar.tc.qmq.utils;
 
 /**
+ * 消息标记
+ * 
  * Created by zhaohui.yu
  * 8/22/18
  */

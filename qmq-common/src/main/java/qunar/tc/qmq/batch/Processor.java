@@ -19,6 +19,8 @@ package qunar.tc.qmq.batch;
 import java.util.List;
 
 /**
+ * 处理器接口
+ * 
  * User: zhaohuiyu
  * Date: 6/4/13
  * Time: 5:21 PM

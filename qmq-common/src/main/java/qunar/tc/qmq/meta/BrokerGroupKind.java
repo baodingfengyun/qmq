@@ -17,6 +17,8 @@
 package qunar.tc.qmq.meta;
 
 /**
+ * 代理类型
+ * 
  * @author keli.wang
  * @since 2018-12-05
  */

@@ -19,11 +19,16 @@ package qunar.tc.qmq.base;
 import io.netty.buffer.ByteBuf;
 
 /**
+ * 原始消息
+ * 
  * @author yiqun.fan create on 17-7-4.
  */
 public class RawMessage {
+    /** 消息头 */
     private final MessageHeader header;
+    /** 数据缓冲 */
     private final ByteBuf body;
+    /** 数据体大小 */
     private final int bodySize;
 
     public RawMessage(MessageHeader header, ByteBuf body, int size) {

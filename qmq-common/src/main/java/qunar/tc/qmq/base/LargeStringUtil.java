@@ -17,12 +17,23 @@
 package qunar.tc.qmq.base;
 
 /**
- * Created by zhaohui.yu
- * 5/4/18
+ * 大字符串支持工具
+ * 
+ * Created by zhaohui.yu 5/4/18
  */
 class LargeStringUtil {
     private static final int _32K = (32 * 1024) / 4;
 
+    /**
+     * 数据的长度不大于32K,直接设置整个数据. 如果大于32K,就分段设置key#part0,32K数据段.
+     * 
+     * @param msg
+     *            消息
+     * @param key
+     *            消息属性key
+     * @param data
+     *            消息数据
+     */
     static void setLargeString(BaseMessage msg, String key, String data) {
         int len = data.length();
         if (len <= _32K) {
@@ -30,8 +41,11 @@ class LargeStringUtil {
             return;
         }
 
+        // 消息设置为大数据消息
         msg.isBigMessage = true;
+        // 分段ID
         int partIdx = 0;
+        // 数据分段
         for (int remain = len; remain > 0; remain -= _32K) {
             final int beginIdx = partIdx * _32K;
             final int endIdx = beginIdx + Math.min(_32K, remain);
@@ -41,10 +55,21 @@ class LargeStringUtil {
         }
     }
 
+    /**
+     * 从消息中获取大数据
+     * 
+     * @param msg
+     *            消息
+     * @param key
+     *            消息属性key
+     * @return
+     */
     static String getLargeString(BaseMessage msg, String key) {
         String small = msg.getStringProperty(key);
-        if (small != null) return small;
+        if (small != null)
+            return small;
 
+        // 如果按key获取数据, 获取不到, 继续按key#part方式查找,合并分段数据返回
         StringBuilder result = new StringBuilder();
         int partIdx = 0;
         while (true) {
@@ -58,6 +83,13 @@ class LargeStringUtil {
         return result.toString();
     }
 
+    /**
+     * 获取原key的分段partkey
+     * 
+     * @param key
+     * @param idx
+     * @return
+     */
     private static String buildPartKey(String key, int idx) {
         return key + "#part" + idx;
     }

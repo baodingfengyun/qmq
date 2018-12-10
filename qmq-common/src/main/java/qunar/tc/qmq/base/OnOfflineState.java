@@ -17,6 +17,8 @@
 package qunar.tc.qmq.base;
 
 /**
+ * 在线/离线状态
+ * 
  * yiqun.fan@qunar.com 2018/3/2
  */
 public enum OnOfflineState {

@@ -26,20 +26,31 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
+ * 批量处理
+ * 
  * User: zhaohuiyu Date: 6/4/13 Time: 5:21 PM
  */
 public class BatchExecutor<Item> implements Runnable {
+    /** 名称 */
     private final String name;
+    /** 批量数 */
     private final int batchSize;
+    /** 处理器 */
     private final Processor<Item> processor;
 
+    /** 默认队列容量 */
     private static final int DEFAULT_QUEUE_SIZE = 1000;
+    /** 默认线程数 */
     private static final int DEFAULT_PROCESS_THREADS = Runtime.getRuntime().availableProcessors() + 1;
 
+    /** 队列容量 */
     private int queueSize = DEFAULT_QUEUE_SIZE;
+    /** 线程数 */
     private int threads;
 
+    /** 队列 */
     private BlockingQueue<Item> queue;
+    /** 线程池 */
     private ThreadPoolExecutor executor;
 
     public BatchExecutor(String name, int batchSize, Processor<Item> processor) {

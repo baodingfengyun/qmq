@@ -20,16 +20,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * 消息头
+ * 
  * @author yiqun.fan create on 17-7-4.
  */
 public class MessageHeader {
+    /** 消息体数据CRC校验 */
     private long bodyCrc;
+    /** 消息标记,参见Flags类,标记:isDelay */
     private byte flag;
+    /** 创建时间 */
     private long createTime;
+    /** 过期时间 */
     private long expireTime;
+    /** 分类 */
     private String subject;
+    /** 消息ID */
     private String messageId;
-
+    /** TAG集合 */
     private Set<String> tags = new HashSet<>();
 
     public long getBodyCrc() {

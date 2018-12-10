@@ -17,6 +17,8 @@
 package qunar.tc.qmq.meta;
 
 /**
+ * 代理状态
+ * 
  * @author yunfeng.yang
  * @since 2017/8/28
  */
@@ -29,6 +31,7 @@ public enum BrokerState {
         this.code = code;
     }
 
+    // 与其它枚举的实现方式不同
     public static BrokerState codeOf(int brokerState) {
         for (BrokerState value : BrokerState.values()) {
             if (value.getCode() == brokerState) {

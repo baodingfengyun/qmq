@@ -20,6 +20,9 @@ import com.google.common.base.Supplier;
 
 import java.util.ServiceLoader;
 
+/**
+ * 度量
+ */
 public class Metrics {
     private static final String[] EMPTY = new String[0];
 

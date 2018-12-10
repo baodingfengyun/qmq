@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 客户端类型: 生产者, 消费者, 其它, 延迟生产者
+ * 
  * @author yiqun.fan create on 17-8-22.
  */
 public enum ClientType {
@@ -30,6 +32,7 @@ public enum ClientType {
     OTHER(3),
     DELAY_PRODUCER(4);
 
+    // 此map用于后面的of方法, 如果是使用频繁的类型, 这样做性能更好
     private static final ImmutableMap<Integer, ClientType> INSTANCES;
 
     static {

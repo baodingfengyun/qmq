@@ -16,6 +16,9 @@
 
 package qunar.tc.qmq.metrics;
 
+/**
+ * 度量常量
+ */
 public class MetricsConstants {
     public static final String[] SUBJECT_ARRAY = new String[]{"subject"};
 
