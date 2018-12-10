@@ -27,36 +27,42 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 基本消息,实现消息接口
+ * 
  * @author miao.yang susing@gmail.com
  * @date 2012-12-26
  */
 public class BaseMessage implements Message, Serializable {
     private static final long serialVersionUID = 303069262539600333L;
-
+    /** 消息ID最大长度 */
     private static final int MAX_MESSAGE_ID_LEN = 100;
-
+    /** 消息TAG最多10个 */
     private static final int MAX_TAGS_COUNT = 10;
-
+    /** 消息ID */
     String messageId;
-
+    /** 消息分类[必选] */
     String subject;
-
+    /** 消息TAG[分类之下的类别] */
     private final transient Set<String> tags = new CopyOnWriteArraySet<>();
-
+    /** 是否大消息,大于4MB */
     transient boolean isBigMessage = false;
 
+    /**
+     * 消息属性[可扩展]定义,如果需要新加属性,在这里定义即可
+     */
     public enum keys {
-        qmq_createTime,
-        qmq_expireTime,
-        qmq_consumerGroupName,
-        qmq_scheduleReceiveTime,
-        qmq_times,
-        qmq_maxRetryNum,
-        qmq_appCode,
-        qmq_pullOffset,
-        qmq_corruptData
+        qmq_createTime, // 创建时间
+        qmq_expireTime, // 过期时间
+        qmq_consumerGroupName, // 消费者group
+        qmq_scheduleReceiveTime, // 计划接收时间[延迟消息]
+        qmq_times, // 使用方监控的发送次数
+        qmq_maxRetryNum, // 最大重试次数
+        qmq_appCode, // APP code
+        qmq_pullOffset, // 拉取offset
+        qmq_corruptData, // ?
     }
 
+    /** 已定义的消息属性名 */
     private static final Set<String> keyNames = Sets.newHashSet();
 
     static {
@@ -64,6 +70,7 @@ public class BaseMessage implements Message, Serializable {
             keyNames.add(key.name());
     }
 
+    /** 采用Map来模拟一个[可扩展]的消息属性对象 */
     HashMap<String, Object> attrs = new HashMap<>();
 
     public BaseMessage() {
@@ -72,9 +79,11 @@ public class BaseMessage implements Message, Serializable {
     public BaseMessage(String messageId, String subject) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(messageId), "message id should not empty");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(subject), "message subject should not empty");
-        Preconditions.checkArgument(messageId.length() <= MAX_MESSAGE_ID_LEN, "messageId长度不能超过" + MAX_MESSAGE_ID_LEN + "个字符");
+        Preconditions.checkArgument(messageId.length() <= MAX_MESSAGE_ID_LEN,
+                "messageId长度不能超过" + MAX_MESSAGE_ID_LEN + "个字符");
         if (RetrySubjectUtils.isRealSubject(subject)) {
-            Preconditions.checkArgument(subject.length() <= MAX_MESSAGE_ID_LEN, "subject长度不能超过" + MAX_MESSAGE_ID_LEN + "个字符");
+            Preconditions.checkArgument(subject.length() <= MAX_MESSAGE_ID_LEN,
+                    "subject长度不能超过" + MAX_MESSAGE_ID_LEN + "个字符");
         }
 
         this.messageId = messageId;
@@ -157,7 +166,8 @@ public class BaseMessage implements Message, Serializable {
 
     @Override
     public void setProperty(String name, Boolean value) {
-        if (value == null) return;
+        if (value == null)
+            return;
         setObjectProperty(name, value);
     }
 
@@ -168,7 +178,8 @@ public class BaseMessage implements Message, Serializable {
 
     @Override
     public void setProperty(String name, Integer value) {
-        if (value == null) return;
+        if (value == null)
+            return;
         setObjectProperty(name, value);
     }
 
@@ -179,7 +190,8 @@ public class BaseMessage implements Message, Serializable {
 
     @Override
     public void setProperty(String name, Long value) {
-        if (value == null) return;
+        if (value == null)
+            return;
         setObjectProperty(name, value);
     }
 
@@ -190,7 +202,8 @@ public class BaseMessage implements Message, Serializable {
 
     @Override
     public void setProperty(String name, Float value) {
-        if (value == null) return;
+        if (value == null)
+            return;
         setObjectProperty(name, value);
     }
 
@@ -201,19 +214,22 @@ public class BaseMessage implements Message, Serializable {
 
     @Override
     public void setProperty(String name, Double value) {
-        if (value == null) return;
+        if (value == null)
+            return;
         setObjectProperty(name, value);
     }
 
     @Override
     public void setProperty(String name, Date value) {
-        if (value == null) return;
+        if (value == null)
+            return;
         setObjectProperty(name, value.getTime());
     }
 
     @Override
     public void setProperty(String name, String value) {
-        if (value == null) return;
+        if (value == null)
+            return;
         setObjectProperty(name, value);
     }
 
@@ -297,12 +313,19 @@ public class BaseMessage implements Message, Serializable {
         attrs.remove(key.name());
     }
 
+    /**
+     * TAG的长度小于Short最大值,数量最大10个,不能重复.
+     * 
+     * @return 返回Message,支持链式调用
+     */
     @Override
     public Message addTag(String tag) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(tag), "a tag can not be null or empty");
-        Preconditions.checkArgument(tag.length() <= Short.MAX_VALUE, "the length of a tag mush be smaller than Short.MAX_VALUE");
+        Preconditions.checkArgument(tag.length() <= Short.MAX_VALUE,
+                "the length of a tag mush be smaller than Short.MAX_VALUE");
         if (tags.size() >= MAX_TAGS_COUNT) {
-            throw new IllegalArgumentException("the size of tags cannot be more than MAX_TAGS_COUNT(" + MAX_TAGS_COUNT + ")");
+            throw new IllegalArgumentException(
+                    "the size of tags cannot be more than MAX_TAGS_COUNT(" + MAX_TAGS_COUNT + ")");
         }
         tags.add(tag);
         return this;
@@ -369,7 +392,8 @@ public class BaseMessage implements Message, Serializable {
     @Override
     public int times() {
         Object o = getProperty(keys.qmq_times);
-        if (o == null) return 1;
+        if (o == null)
+            return 1;
         return Integer.valueOf(o.toString());
     }
 

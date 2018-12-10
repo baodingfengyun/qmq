@@ -22,13 +22,22 @@ import qunar.tc.qmq.base.BaseMessage;
 import java.util.Map;
 
 /**
+ * 消费消息
+ * 
  * @author yiqun.fan create on 17-8-19.
  */
 public class ConsumeMessage extends BaseMessage {
+    private static final long serialVersionUID = -2972554218118307012L;
+
+    /** 消息处理线程(有些操作不能跨线程调用) */
     private transient volatile Thread processThread;
+    /** 消息自动回复 */
     private volatile boolean autoAck = true;
+    /** 本地重试次数 */
     private volatile transient int localRetries;
+    /** 过滤上下文,采用Map模拟 */
     private transient volatile Map<String, Object> filterContext;
+    /** 针对List<Filter>的索引,表示已经处理的过滤进度 */
     private transient volatile int processedFilterIndex = -1;
 
     protected ConsumeMessage(BaseMessage message) {

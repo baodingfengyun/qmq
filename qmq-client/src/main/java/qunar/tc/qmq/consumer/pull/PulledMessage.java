@@ -22,11 +22,17 @@ import qunar.tc.qmq.consumer.ConsumeMessage;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * PULL模式消息
+ * 
  * @author yiqun.fan create on 17-7-20.
  */
 class PulledMessage extends ConsumeMessage {
+    private static final long serialVersionUID = 634057708835754701L;
+    /** ACK游标 */
     private transient final AckEntry ackEntry;
+    /** 回复HOOK */
     private transient final AckHook ackHook;
+    /** 是否已经回复 */
     private transient final AtomicBoolean hasAcked = new AtomicBoolean(false);
 
     PulledMessage(BaseMessage message, AckEntry ackEntry, AckHook ackHook) {
